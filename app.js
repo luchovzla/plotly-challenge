@@ -10,9 +10,17 @@ function init() {
     // Populate dropdown in html
 
     var dropdownMenu = d3.select("#selDataset");
-    d3.json("data/samples.json").then(function(data) {
-        console.log(data);
-    })
+    d3.json("data/samples.json").then(data => {
+        console.log(data.names);
+
+        var sampleNames = data.names;
+
+        sampleNames.forEach(sampleId => {
+            dropdownMenu.append("option")
+                .text(sampleId)
+                .property("value", sampleId)
+        });
+    });
 
     // Update bargraph
 
