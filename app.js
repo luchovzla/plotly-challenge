@@ -1,9 +1,25 @@
+// Portions of the code come from instructor's office hours guidance
+
 console.log("app.js loaded successfully!");
 
-// Read samples.json
 
-var jsonPath = "./samples.json";
-var bellyButtonData = d3.json(jsonPath);
+// Initialize webpage with default dataset
+
+function init() {
+    
+    // Populate dropdown in html
+
+    var dropdownMenu = d3.select("#selDataset");
+    d3.json("data/samples.json").then(function(data) {
+        console.log(data);
+    })
+
+    // Update bargraph
+
+    // Update bubblechart
+
+    // Update demographic information
+};
 
 // Horizontal bar chart
 
@@ -14,3 +30,5 @@ function optionChanged() {
 
     var dataset = dropdownMenu.property("value");
 };
+
+init();
