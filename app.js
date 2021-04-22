@@ -6,6 +6,19 @@ console.log("app.js loaded successfully!");
 
 function drawBarGraph(sampleId) {
     console.log(`drawBarGraph(${sampleId})`);
+
+    // Read JSON to extract data to plot
+    d3.json("data/samples.json").then(data => {
+        var sampleNames = data.names;
+        // Use findIndex to look for the sample id index 
+        var index = sampleNames.findIndex(id => id === sampleId);
+
+        // Extract data to graph using the index
+        var otu_ids = data.samples[index].otu_ids;
+        var sample_values = data.samples[index].sample_values;
+        var otu_labels = data.samples[index].otu_labels;
+
+    });
 }
 
 // Bubble Chart
@@ -58,6 +71,7 @@ function init() {
 
 function optionChanged(newSampleId) {
     
+    // Refresh graphs using new sample ID
     console.log(`User selected ${newSampleId}`)
     drawBarGraph(newSampleId);
     drawBubbleChart(newSampleId);
