@@ -1,4 +1,4 @@
-// Portions of the code come from instructor's office hours guidance
+// Portions of the code are taken directly from instructor's office hours guidance
 
 console.log("app.js loaded successfully!");
 
@@ -14,10 +14,31 @@ function drawBarGraph(sampleId) {
         var index = sampleNames.findIndex(id => id === sampleId);
 
         // Extract data to graph using the index
-        var otu_ids = data.samples[index].otu_ids;
-        var sample_values = data.samples[index].sample_values;
-        var otu_labels = data.samples[index].otu_labels;
+        var otuIds = data.samples[index].otu_ids;
+        var sampleValues = data.samples[index].sample_values;
+        var otuLabels = data.samples[index].otu_labels;
 
+        // Filter top 10 values, ID's and Labels
+        var top10Ids = otuIds.slice(0, 10).map(otu => `OTU ${otu}`);
+        var top10Values = sampleValues.slice(0, 10);
+        var top10Labels = otuLabels.slice(0, 10);
+
+        // Sort in descending order
+        var sortedIds = top10Ids.reverse();
+        var sortedValues = top10Values.reverse();
+        var sortedLabels = top10Labels.reverse();
+
+        // Trace for Plotly
+        var barData = [{
+            x: top10Values,
+            y: top10Ids,
+            text: top10Labels,
+            type: "bar",
+            orientation: "h"
+        }];
+
+        // Draw plot
+        Plotly.newPlot("bar", barData);
     });
 }
 
