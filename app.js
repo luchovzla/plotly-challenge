@@ -46,6 +46,39 @@ function drawBarGraph(sampleId) {
 
 function drawBubbleChart(sampleId) {
     console.log(`drawBubbleChart(${sampleId})`);
+
+    d3.json("data/samples.json").then(data => {
+
+    var sampleNames = data.names;
+    // use findIndex to look for the sample id index
+    var index = sampleNames.findIndex(id => id === sampleId);
+
+    // Extract data to graph using the index
+    var otuIds = data.samples[index].otu_ids;
+    var sampleValues = data.samples[index].sample_values;
+    var otuLabels = data.samples[index].otu_labels;
+
+    // Trace for Plotly
+    var bubbleData = [{
+        x: otuIds,
+        y: sampleValues,
+        mode: 'markers',
+        marker: {
+            size: sampleValues,
+            color: otuIds
+        },
+        text: otuLabels
+    }];
+
+    var bubbleLayout = {
+        xaxis: {
+            "title": "OTU ID"
+        }
+    };
+
+    Plotly.newPlot("bubble", bubbleData, bubbleLayout);
+
+    });
 }
 
 function showSubjectInfo(sampleId) {
