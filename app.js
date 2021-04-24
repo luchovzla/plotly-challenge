@@ -5,7 +5,6 @@ console.log("app.js loaded successfully!");
 // Bar Graph
 
 function drawBarGraph(sampleId) {
-    console.log(`drawBarGraph(${sampleId})`);
 
     // Read JSON to extract data to plot
     d3.json("data/samples.json").then(data => {
@@ -45,8 +44,8 @@ function drawBarGraph(sampleId) {
 // Bubble Chart
 
 function drawBubbleChart(sampleId) {
-    console.log(`drawBubbleChart(${sampleId})`);
-
+    
+    // Read JSON to extract data to plot
     d3.json("data/samples.json").then(data => {
 
     var sampleNames = data.names;
@@ -83,6 +82,27 @@ function drawBubbleChart(sampleId) {
 
 function showSubjectInfo(sampleId) {
     console.log(`showSubjectInfo(${sampleId})`);
+    
+    // Read JSON to extract data to plot
+    d3.json("data/samples.json").then(data => {
+    
+        var sampleNames = data.names;
+        // use findIndex to look for the sample id index
+        var index = sampleNames.findIndex(id => id === sampleId);
+
+        // Extract metadata
+        var subjectInfo = data.metadata[index];
+
+        // Populate demographic info
+        console.log(subjectInfo);
+        var textBox = d3.select("#sample-metadata");
+
+        Object.entries(subjectInfo).forEach(([key, value]) => {
+            textBox.append("text").text(`${key}: ${value}`);
+            textBox.append("br");
+        });
+
+    });
 }
 
 // Initialize webpage with default dataset
@@ -129,6 +149,11 @@ function optionChanged(newSampleId) {
     console.log(`User selected ${newSampleId}`)
     drawBarGraph(newSampleId);
     drawBubbleChart(newSampleId);
+
+    // Delete previous subject info
+    d3.select("#sample-metadata").html("");
+
+    // Add new info
     showSubjectInfo(newSampleId);
 
 };
