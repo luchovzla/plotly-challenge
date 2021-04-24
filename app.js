@@ -36,8 +36,12 @@ function drawBarGraph(sampleId) {
             orientation: "h"
         }];
 
+        var barLayout = {
+            title: "Top 10 Bacteriae"
+        };
+
         // Draw plot
-        Plotly.newPlot("bar", barData);
+        Plotly.newPlot("bar", barData, barLayout);
     });
 }
 
@@ -64,12 +68,14 @@ function drawBubbleChart(sampleId) {
         mode: 'markers',
         marker: {
             size: sampleValues,
-            color: otuIds
+            color: otuIds,
+            colorscale: "Portland"
         },
         text: otuLabels
     }];
 
     var bubbleLayout = {
+        title: "Bacteria Cultures per Sample",
         xaxis: {
             "title": "OTU ID"
         }
